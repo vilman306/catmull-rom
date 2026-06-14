@@ -37,8 +37,8 @@ namespace cardinal
     T CalculateCardinalSplinePoint(T P0, T P1, T P2, T P3, double t, double Tension)
     {
         double t2 = t * t;
-        double t3 = t * tSquared;
-        double s = (1.0 - T) * 0.5;
+        double t3 = t * t2;
+        double s = (1.0 - Tension) * 0.5;
         T StartTangent = s * (P2 - P0);
         T EndTangent = s * (P3 - P1);
         T Result = (2*t3 - 3*t2 + 1) * P1 + (t3 - 2*t2 + t) * StartTangent
