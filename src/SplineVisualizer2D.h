@@ -11,6 +11,7 @@ class SplineVisualizer2D : public godot::Node2D
 private:
     godot::PackedVector2Array knot_points;
     double tension = 0.0;
+    unsigned int lines_per_segment = 10;
 
 protected:
     static void _bind_methods();
@@ -24,6 +25,9 @@ public:
 
     void set_tension(double p_tension);
     double get_tension();
+
+    void set_lines_per_segment(unsigned int p_lines_per_segment);
+    unsigned int get_lines_per_segment();
 
     void _draw() override;
 };

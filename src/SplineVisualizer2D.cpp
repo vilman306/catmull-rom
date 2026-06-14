@@ -24,6 +24,10 @@ void SplineVisualizer2D::_bind_methods()
     godot::ClassDB::bind_method(godot::D_METHOD("set_tension", "p_tension"), &SplineVisualizer2D::set_tension);
     godot::ClassDB::bind_method(godot::D_METHOD("get_tension"), &SplineVisualizer2D::get_tension);
     ADD_PROPERTY(godot::PropertyInfo(godot::Variant::FLOAT, "tension"), "set_tension", "get_tension");
+
+    godot::ClassDB::bind_method(godot::D_METHOD("set_lines_per_segment", "p_lines_per_segment"), &SplineVisualizer2D::set_lines_per_segment);
+    godot::ClassDB::bind_method(godot::D_METHOD("get_lines_per_segment"), &SplineVisualizer2D::get_lines_per_segment);
+    ADD_PROPERTY(godot::PropertyInfo(godot::Variant::INT, "lines_per_segment", godot::PROPERTY_HINT_RANGE, "1,500,1"), "set_lines_per_segment", "get_lines_per_segment");
 }
 
 
@@ -49,13 +53,25 @@ double SplineVisualizer2D::get_tension()
     return tension;
 }
 
+void SplineVisualizer2D::set_lines_per_segment(unsigned int p_lines_per_segment)
+{
+    lines_per_segment = p_lines_per_segment;
+    queue_redraw();
+}
+
+unsigned int SplineVisualizer2D::get_lines_per_segment()
+{
+    return lines_per_segment;
+}
+
 void SplineVisualizer2D::_draw()
 {
-    const unsigned int LinesPerSegment = 10; // Nr of lines to draw per segment
-    
     unsigned int NrOfPoints = knot_points.size();
     if (NrOfPoints < 2)
         return;
+
+    // store lines_per_segment locally so don't have to get it every time
+    const unsigned int LinesPerSegment = lines_per_segment;
 
     godot::Vector2 P[4]; //= {{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}};
     for (int i = 0; i < NrOfPoints-1; i++) // Runs for every segment to interpolate
@@ -70,7 +86,7 @@ void SplineVisualizer2D::_draw()
         
         // Draw the interpolated segment with lines
         godot::Vector2 PreviousPoint = knot_points[i];
-        for (int j = 1; j <= LinesPerSegment; j++) // Runs for every line to draw
+        for (unsigned int j = 1; j <= LinesPerSegment; j++) // Runs for every line to draw
         { 
             double t = double(j) / LinesPerSegment;
             godot::Vector2 Point = cardinal::CalculateCardinalSplinePoint(P[0],
