@@ -28,7 +28,7 @@ namespace cardinal
     // Returns the point at "step" t (0<=t<=1) along the spline interpolation of the Points.
     // Argument requirements: 
     // 0 <= t <= 1
-    // Either two or four points. Two points will create "default" tangents at start and end.
+    // Either two, three or four points.
     godot::Vector2 EvaluateSplineSegment2D(double t, const std::vector<godot::Vector2>& SegmentPoints, double Tension);
     godot::Vector3 EvaluateSplineSegment3D(double t, const std::vector<godot::Vector3>& SegmentPoints, double Tension);
 

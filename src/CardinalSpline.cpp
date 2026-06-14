@@ -81,6 +81,8 @@ bool ArgumentsAreInvalid(double t, const std::vector<godot::Vector3>& Points)
 // }
 
 
+
+
 bool NrOfSegmentPointsIsInvalid(unsigned int NrOfPoints)
 {
     unsigned int NrOfPointsOpt1 = 2;
@@ -104,66 +106,66 @@ bool SegmentArgumentsAreInvalid(double t, unsigned int NrOfSegmentPoints)
 
 
 
-godot::Vector2 cardinal::EvaluateSplineSegment2D(double t, const std::vector<godot::Vector2>& SegmentPoints, double Tension)
-{
-    godot::Vector2 Result = {0.0, 0.0};
+// godot::Vector2 cardinal::EvaluateSplineSegment2D(double t, const std::vector<godot::Vector2>& SegmentPoints, double Tension)
+// {
+//     godot::Vector2 Result = {0.0, 0.0};
     
-    // Check arguments
-    unsigned int NrOfSegmentPoints = SegmentPoints.size();
-    if (SegmentArgumentsAreInvalid(t, NrOfSegmentPoints))
-    {
-        return Result;
-    }
-    // CheckTension(Tension);
+//     // Check arguments
+//     unsigned int NrOfSegmentPoints = SegmentPoints.size();
+//     if (SegmentArgumentsAreInvalid(t, NrOfSegmentPoints))
+//     {
+//         return Result;
+//     }
+//     // CheckTension(Tension);
     
-    // Calculate Result
-    godot::Vector2 P0, P1, P2, P3;
-    bool HasGhostPoints = (NrOfSegmentPoints == 4);
-    if (HasGhostPoints)
-    {
-        P0 = SegmentPoints[0];
-        P1 = SegmentPoints[1];
-        P2 = SegmentPoints[2];
-        P3 = SegmentPoints[3];
-    }
-    else
-    {
-        P0 = P1 = SegmentPoints[0];
-        P2 = P3 = SegmentPoints[1];
-    }
+//     // Calculate Result
+//     godot::Vector2 P0, P1, P2, P3;
+//     bool HasGhostPoints = (NrOfSegmentPoints == 4);
+//     if (HasGhostPoints)
+//     {
+//         P0 = SegmentPoints[0];
+//         P1 = SegmentPoints[1];
+//         P2 = SegmentPoints[2];
+//         P3 = SegmentPoints[3];
+//     }
+//     else
+//     {
+//         P0 = P1 = SegmentPoints[0];
+//         P2 = P3 = SegmentPoints[1];
+//     }
 
-    Result = cardinal::CalculateCardinalSplinePoint(P0, P1, P2, P3, t, Tension);
-    return Result;
-}
+//     Result = cardinal::CalculateCardinalSplinePoint(P0, P1, P2, P3, t, Tension);
+//     return Result;
+// }
 
-godot::Vector3 cardinal::EvaluateSplineSegment3D(double t, const std::vector<godot::Vector3>& SegmentPoints, double Tension)
-{
-    godot::Vector3 Result = {0.0, 0.0, 0.0};
+// godot::Vector3 cardinal::EvaluateSplineSegment3D(double t, const std::vector<godot::Vector3>& SegmentPoints, double Tension)
+// {
+//     godot::Vector3 Result = {0.0, 0.0, 0.0};
 
-    // Check arguments
-    unsigned int NrOfSegmentPoints = SegmentPoints.size();
-    if (SegmentArgumentsAreInvalid(t, NrOfSegmentPoints))
-    {
-        return Result;
-    }
-    // CheckTension(Tension);
+//     // Check arguments
+//     unsigned int NrOfSegmentPoints = SegmentPoints.size();
+//     if (SegmentArgumentsAreInvalid(t, NrOfSegmentPoints))
+//     {
+//         return Result;
+//     }
+//     // CheckTension(Tension);
 
-    // Calculate Result ...
-    godot::Vector3 P0, P1, P2, P3;
-    bool HasGhostPoints = (NrOfSegmentPoints == 4);
-    if (HasGhostPoints)
-    {
-        P0 = SegmentPoints[0];
-        P1 = SegmentPoints[1];
-        P2 = SegmentPoints[2];
-        P3 = SegmentPoints[3];
-    }
-    else
-    {
-        P0 = P1 = SegmentPoints[0];
-        P2 = P3 = SegmentPoints[1];
-    }
+//     // Calculate Result ...
+//     godot::Vector3 P0, P1, P2, P3;
+//     bool HasGhostPoints = (NrOfSegmentPoints == 4);
+//     if (HasGhostPoints)
+//     {
+//         P0 = SegmentPoints[0];
+//         P1 = SegmentPoints[1];
+//         P2 = SegmentPoints[2];
+//         P3 = SegmentPoints[3];
+//     }
+//     else
+//     {
+//         P0 = P1 = SegmentPoints[0];
+//         P2 = P3 = SegmentPoints[1];
+//     }
 
-    Result = cardinal::CalculateCardinalSplinePoint(P0, P1, P2, P3, t, Tension);
-    return Result;
-}
+//     Result = cardinal::CalculateCardinalSplinePoint(P0, P1, P2, P3, t, Tension);
+//     return Result;
+// }
