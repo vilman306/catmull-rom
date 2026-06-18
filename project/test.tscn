@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://82iv13wwwngs"]
+
+[ext_resource type="PackedScene" uid="uid://cnki2ed7voly2" path="res://worm.tscn" id="1_37kl0"]
+
+[node name="Node2D" type="Node2D" unique_id=1206777671]
+
+[node name="SplineVisualizer2D" type="SplineVisualizer2D" parent="." unique_id=889022186]
+points = PackedVector2Array(0, 0, 0, 100, 200, 100, 100, 200, 50, 180, -40, 150, -86.065, 41.53, -139.38, 0)
+tension = 0.345
+lines_per_segment = 24
+position = Vector2(520, 115)
+scale = Vector2(2, 2)
+
+[node name="Worm" parent="." unique_id=482557167 instance=ExtResource("1_37kl0")]
