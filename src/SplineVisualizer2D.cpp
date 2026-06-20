@@ -66,14 +66,17 @@ unsigned int SplineVisualizer2D::get_lines_per_segment()
 
 void SplineVisualizer2D::_draw()
 {
+    // At least 2 points are required
     unsigned int NrOfPoints = knot_points.size();
     if (NrOfPoints < 2)
         return;
 
-    // store lines_per_segment locally so don't have to get it every time
-    const unsigned int LinesPerSegment = lines_per_segment;
+    /// Draw Interpolated Lines:
 
-    godot::Vector2 P[4]; //= {{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}};
+    float LineWidth = 2.0f;
+    godot::Color LineColor = {1.0f, 0.0f, 0.0f};
+	const unsigned int LinesPerSegment = lines_per_segment; // store lines_per_segment locally so don't have to get it every time
+	godot::Vector2 P[4]; //= {{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}};
     for (int i = 0; i < NrOfPoints-1; i++) // Runs for every segment to interpolate
     {
         P[1] = knot_points[i];
@@ -91,8 +94,16 @@ void SplineVisualizer2D::_draw()
             double t = double(j) / LinesPerSegment;
             godot::Vector2 Point = cardinal::CalculateCardinalSplinePoint(P[0],
                 P[1], P[2], P[3], t, tension);
-            draw_line(PreviousPoint, Point, godot::Color(1, 0, 0), 2.0f);
+            draw_line(PreviousPoint, Point, LineColor, LineWidth);
             PreviousPoint = Point;
         }
+	}
+
+    /// Draw Circles At Knot Points:
+    float CircleRadius = 3.0f;
+    godot::Color CircleColor = {0.0f, 0.0f, 1.0f};
+    for (const godot::Vector2& point : knot_points)
+    {
+        draw_circle(point, CircleRadius, CircleColor);
     }
 }

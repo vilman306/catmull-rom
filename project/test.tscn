@@ -5,8 +5,8 @@
 [node name="Node2D" type="Node2D" unique_id=1206777671]
 
 [node name="SplineVisualizer2D" type="SplineVisualizer2D" parent="." unique_id=889022186]
-points = PackedVector2Array(0, 0, 0, 100, 200, 100, 100, 200, 50, 180, -40, 150, -86.065, 41.53, -139.38, 0)
-tension = 0.345
+points = PackedVector2Array(0, 0, 0, 100, 200, 100, 100, 200, 50, 180, -40, 150, -86.065, 41.53, -139.38, 0, -104.58, -28.815)
+tension = 0.43
 lines_per_segment = 24
 position = Vector2(520, 115)
 scale = Vector2(2, 2)

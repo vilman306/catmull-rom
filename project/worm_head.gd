@@ -1,13 +1,13 @@
 extends Node2D
 
 # movement
-const move_speed: float = 50.0
-const boost_speed: float = 100.0
+const move_speed: float = 140.0
+const boost_speed: float = 300.0
 var current_speed: float = move_speed # pixels per second
 var angular_speed: float = 3.0 # radians per second
 var current_move_angle: float = 0.0 # in radians, always in interval [-PI, PI[
 # body
-const base_length: int = 4 # base "unit" that length has to be an integer multiple of.
+const base_length: int = 10 # base "unit" that length has to be an integer multiple of.
 var length: int = base_length * 16 # pixels (in base resolution)    # head should not store body length!
 # position sampling
 signal on_position_sampled(new_position_samples: PackedVector2Array)
@@ -16,7 +16,7 @@ var position_sample_time: float = sample_time_current_speed_product / current_sp
 var position_samples: PackedVector2Array = [] # earliest position at index 0, latest position at index (nr_of_position_samples - 1)
 var position_sample_timer: float = position_sample_time
 var nr_of_position_samples: int = length / sample_time_current_speed_product
-const max_nr_of_position_samples: int = base_length * 16
+const max_nr_of_position_samples: int = base_length * 30
 # test
 const grow_time: float = 2.0
 var grow_timer: float = grow_time
@@ -25,10 +25,9 @@ var grow_amount: int = base_length * 4 # delta length
 # Called when the node enters the scene tree for the first time.
 func _enter_tree() -> void:
 	#assert(current_speed * position_sample_time == 1, "current_speed * position_sample_time != 1. The whole game relies on it being 1 (because it makes nr_of_position_samples int).")
-	assert(nr_of_position_samples < max_nr_of_position_samples, "nr_of_position_samples should not be greater than or equal to %d (maximum) at start." % [max_nr_of_position_samples])
-	assert(max_nr_of_position_samples % base_length == 0, "max_nr_of_position_samples should be multiple of base_length.")
+	assert(nr_of_position_samples < max_nr_of_position_samples, "nr_of_position_samples has to not be greater than or equal to %d (maximum) at start." % [max_nr_of_position_samples])
+	assert(max_nr_of_position_samples % base_length == 0, "max_nr_of_position_samples has to be multiple of base_length.")
 	for i in range(-nr_of_position_samples + 1, 1):
-		#position_samples.append(global_position + Vector2(1, 0) * current_speed * position_sample_time * i / nr_of_position_samples)
 		position_samples.append(global_position)
 	on_position_sampled.emit(position_samples)
 
@@ -65,7 +64,7 @@ func grow(delta_length: int) -> void:
 			nr_of_position_samples += base_length / sample_time_current_speed_product
 		else: # nr_of_position_samples == max_nr_of_position_samples
 			# grow visually by increasing position_sample_time
-			update_position_sample_time() # different visual delta lengths!!!
+			update_position_sample_time() # different visual delta lengths!!! not ok!!!
 			break
 	print("nr_of_position_samples: %d" % [nr_of_position_samples])
 
@@ -82,7 +81,7 @@ func calc_new_move_angle(delta: float, wanted_move_angle: float) -> float:
 		return current_move_angle
 	var rot_dir: int = 1 # 1 => clockwise, -1 => counterclockwise
 	if angle_diff > 0 and angle_diff < PI:
-			rot_dir = -1
+		rot_dir = -1
 	elif angle_diff < -PI:
 		rot_dir = -1
 	var new_move_angle: float = wrapf(current_move_angle + rot_dir * delta * angular_speed, -PI, PI)
