@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cnki2ed7voly2"]
+
+[ext_resource type="Script" uid="uid://brrh7endp44du" path="res://spline_visualizer_2d.gd" id="1_affe2"]
+[ext_resource type="Script" uid="uid://c3x0xu3kfgysc" path="res://worm_head.gd" id="1_rdq8q"]
+[ext_resource type="Texture2D" uid="uid://dbx66sovxd1" path="res://icon.svg" id="2_14tpb"]
+
+[node name="Worm" type="Node2D" unique_id=482557167]
+
+[node name="SplineVisualizer2D" type="SplineVisualizer2D" parent="." unique_id=437783668]
+script = ExtResource("1_affe2")
+
+[node name="WormHead" type="Node2D" parent="SplineVisualizer2D" unique_id=292772712]
+script = ExtResource("1_rdq8q")
+
+[node name="Sprite2D" type="Sprite2D" parent="SplineVisualizer2D/WormHead" unique_id=943440900]
+visible = false
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_14tpb")
+
+[node name="Camera2D" type="Camera2D" parent="SplineVisualizer2D/WormHead/Sprite2D" unique_id=812121610]
