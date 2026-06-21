@@ -16,7 +16,7 @@ var position_sample_time: float = sample_time_current_speed_product / current_sp
 var position_samples: PackedVector2Array = [] # earliest position at index 0, latest position at index (nr_of_position_samples - 1)
 var position_sample_timer: float = position_sample_time
 var nr_of_position_samples: int = length / sample_time_current_speed_product
-const max_nr_of_position_samples: int = base_length * 30
+const max_nr_of_position_samples: int = base_length * 10
 # test
 const grow_time: float = 2.0
 var grow_timer: float = grow_time
@@ -40,9 +40,9 @@ func _process(delta: float) -> void:
 	if position_sample_timer <= 0:
 		sample_position()
 	# test
-	grow_timer -= delta
-	if grow_timer <= 0:
-		grow(grow_amount)
+	#grow_timer -= delta
+	#if grow_timer <= 0:
+		#grow(grow_amount)
 
 func update_current_speed(new_current_speed: float):
 	current_speed = new_current_speed
@@ -64,15 +64,17 @@ func grow(delta_length: int) -> void:
 			nr_of_position_samples += base_length / sample_time_current_speed_product
 		else: # nr_of_position_samples == max_nr_of_position_samples
 			# grow visually by increasing position_sample_time
-			update_position_sample_time() # different visual delta lengths!!! not ok!!!
+			update_position_sample_time() # different visual delta lengths!!! true?
 			break
 	print("nr_of_position_samples: %d" % [nr_of_position_samples])
 
 func update_position_sample_time() -> void:
+	var old_position_sample_time = position_sample_time
 	if nr_of_position_samples == max_nr_of_position_samples: # caused by growth
 		position_sample_time = length / (max_nr_of_position_samples * current_speed)
 	else: # caused by changing current_speed
 		position_sample_time = sample_time_current_speed_product / current_speed
+	position_sample_timer *= position_sample_time / old_position_sample_time # keep timer progress "proportions"
 	print("position_sample_time: %f" % [position_sample_time])
 
 func calc_new_move_angle(delta: float, wanted_move_angle: float) -> float:
@@ -106,3 +108,5 @@ func _input(event: InputEvent) -> void:
 		update_current_speed(boost_speed)
 	elif event.is_action_released("boost"):
 		update_current_speed(move_speed)
+	if event.is_action_pressed("grow"):
+		grow(grow_amount)
