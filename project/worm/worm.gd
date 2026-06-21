@@ -1,7 +1,7 @@
 class_name Worm
 extends Node2D
 
-const BASE_LENGTH: int = 10 # base "unit" that length has to be an integer multiple of.
+const BASE_LENGTH: int = 10 # base "unit" that length has to be an integer multiple of. increasing this allows for greater position_sample_time when nr_of_position_samples < max_nr_of_position_samples.
 var length: int = BASE_LENGTH * 16 # pixels (in base resolution)
 
 signal on_growth(delta_length: int)

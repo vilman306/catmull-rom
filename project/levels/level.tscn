@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://82iv13wwwngs"]
 
-[ext_resource type="PackedScene" uid="uid://cnki2ed7voly2" path="res://worm.tscn" id="1_37kl0"]
+[ext_resource type="PackedScene" uid="uid://cnki2ed7voly2" path="res://worm/worm.tscn" id="1_80vhd"]
 
 [node name="Node2D" type="Node2D" unique_id=1206777671]
 
@@ -11,4 +11,4 @@ lines_per_segment = 24
 position = Vector2(520, 115)
 scale = Vector2(2, 2)
 
-[node name="Worm" parent="." unique_id=482557167 instance=ExtResource("1_37kl0")]
+[node name="Worm" parent="." unique_id=482557167 instance=ExtResource("1_80vhd")]

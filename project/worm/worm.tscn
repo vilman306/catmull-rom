@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://cnki2ed7voly2"]
+
+[ext_resource type="Script" uid="uid://dckl1yvuyb6l5" path="res://worm/worm.gd" id="1_houbu"]
+[ext_resource type="Script" uid="uid://brrh7endp44du" path="res://worm/spline_visualizer_2d.gd" id="2_6fbys"]
+[ext_resource type="Script" uid="uid://c3x0xu3kfgysc" path="res://worm/worm_head.gd" id="3_i34a6"]
+[ext_resource type="Texture2D" uid="uid://dbx66sovxd1" path="res://worm/icon.svg" id="4_ncaup"]
+[ext_resource type="Script" uid="uid://bsj1r0g3aiex7" path="res://worm/head_movement.gd" id="5_xpncx"]
+[ext_resource type="Script" uid="uid://cb2p6b5haqlg8" path="res://worm/head_position_sampler.gd" id="6_shk6a"]
+
+[node name="Worm" type="Node2D" unique_id=482557167]
+script = ExtResource("1_houbu")
+
+[node name="SplineVisualizer2D" type="SplineVisualizer2D" parent="." unique_id=437783668 node_paths=PackedStringArray("head_position_sampler")]
+script = ExtResource("2_6fbys")
+head_position_sampler = NodePath("../WormHead/HeadPositionSampler")
+
+[node name="WormHead" type="Node2D" parent="." unique_id=292772712]
+script = ExtResource("3_i34a6")
+
+[node name="Camera2D" type="Camera2D" parent="WormHead" unique_id=812121610]
+scale = Vector2(0.25, 0.25)
+
+[node name="Sprite2D" type="Sprite2D" parent="WormHead" unique_id=943440900]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("4_ncaup")
+
+[node name="HeadMovement" type="Node" parent="WormHead" unique_id=905410646 node_paths=PackedStringArray("worm_head")]
+script = ExtResource("5_xpncx")
+worm_head = NodePath("..")
+
+[node name="HeadPositionSampler" type="Node" parent="WormHead" unique_id=444930897 node_paths=PackedStringArray("worm", "worm_head", "head_movement")]
+script = ExtResource("6_shk6a")
+worm = NodePath("../..")
+worm_head = NodePath("..")
+head_movement = NodePath("../HeadMovement")
