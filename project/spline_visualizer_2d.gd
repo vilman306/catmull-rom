@@ -1,10 +1,9 @@
 extends SplineVisualizer2D
 
+@export var head_position_sampler: Node
 
-# Called when the node enters the scene tree for the first time.
-func _enter_tree() -> void: # runs before the child's _enter_tree
-	var worm_head: Node2D = get_node("WormHead")
-	worm_head.connect("on_position_sampled", on_head_position_sampled) # runs before the child's first emit
+func _ready() -> void:
+	head_position_sampler.connect("on_position_sampled", on_head_position_sampled)
 
 func on_head_position_sampled(new_position_samples: PackedVector2Array):
 	points = new_position_samples
